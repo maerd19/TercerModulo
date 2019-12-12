@@ -1,30 +1,30 @@
 const formidable = require("formidable");
 const _ = require("lodash");
 const fs = require("fs");
-const Product = require("../models/product");
+const Survey = require("../models/survey");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
-// required product will be stored in req
-exports.productById = (req, res, next, id) => {
-    Product.findById(id).exec((err, product) => {
-        if (err || !product) {
-            return res.status(400).json({
-                error: "Product not found"
+// required survey will be stored in req
+exports.surveyById = (req, res, next, id) => {
+    Survey.findById(id).exec((err, survey) => {
+        if (err || !survey) {
+            return res.status(404).json({
+                error: "No se encontro la encuesta"
             });
         }
-        req.product = product;
+        req.survey = survey;
         next();
     });
 };
 
-// Get a single product
+// Get a single survey
 exports.read = (req, res) => {
     // photo will not be sent because it may have a big size that can cause performance issues
-    req.product.photo = undefined;
-    return res.status(200).json(req.product);
+    req.survey.photo = undefined;
+    return res.status(200).json(req.survey);
 };
 
-// Create a new product
+// Create a new survey
 exports.create = (req, res) => {
     // formidable will help to handle from requests
     let form = new formidable.IncomingForm();
@@ -33,20 +33,20 @@ exports.create = (req, res) => {
         
         if (err) {
             return res.status(400).json({
-                error: "Image could not be uploaded"
+                error: "No se pudo cargar la imagen"
             });
         }
 
-        const { name, description, price, category, quantity, shipping } = fields;
+        const { name, description, user } = fields;
 
         // all fields should be filled
-        if ( !name || !description || !price || !category || !quantity || !shipping ) {
+        if ( !name || !description || !user ) {
             return res.status(400).json({
-                error: "All fields are required"
+                error: "Todos los campos son requeridos"
             });
         }
 
-        let product = new Product(fields);
+        let survey = new Survey(fields);
 
         // 1kb = 1000
         // 1mb = 1000000
@@ -56,15 +56,15 @@ exports.create = (req, res) => {
             // console.log("FILES PHOTO: ", files.photo);
             if (files.photo.size > 1000000) {
                 return res.status(400).json({
-                    error: "Image should be less than 1mb in size"
+                    error: "La imagen debe pesar menos de 1 MB"
                 });
             }
-            product.photo.data = fs.readFileSync(files.photo.path);
-            product.photo.contentType = files.photo.type;
+            survey.photo.data = fs.readFileSync(files.photo.path);
+            survey.photo.contentType = files.photo.type;
         }
         
-        // new product is created in DB
-        product.save((err, result) => {
+        // new survey is created in DB
+        survey.save((err, result) => {
             if (err) {
                 return res.status(400).json({
                     error: errorHandler(err)
@@ -75,43 +75,43 @@ exports.create = (req, res) => {
     });
 };
 
-// Delete a product
+// Delete a survey
 exports.remove = (req, res) => {
-    let product = req.product;
-    product.remove((err, deletedProduct) => {
+    let survey = req.survey;
+    survey.remove((err) => {
         if (err) {
             return res.status(400).json({
                 error: errorHandler(err)
             });
         }
         res.status(204).json({
-            message: "Product deleted successfully"
+            message: `Encuesta borrada exitosamente`
         });
     });
 };
 
-// Update a product
+// Update a survey
 exports.update = (req, res) => {
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
     form.parse(req, (err, fields, files) => {
         if (err) {
             return res.status(400).json({
-                error: "Image could not be uploaded"
+                error: "No se pudo cargar la imagen"
             });
         }
         // check for all fields
-        const { name, description, price, category, quantity, shipping } = fields;
+        const { name, description, user } = fields;
 
-        if ( !name || !description || !price || !category || !quantity || !shipping ) {
+        if ( !name || !description || !user ) {
             return res.status(400).json({
-                error: "All fields are required"
+                error: "Todos los campos son requeridos"
             });
         }
 
-        let product = req.product;
+        let survey = req.survey;
         // use of lodash extends method
-        product = _.extend(product, fields);
+        survey = _.extend(survey, fields);
 
         // 1kb = 1000
         // 1mb = 1000000
@@ -120,14 +120,14 @@ exports.update = (req, res) => {
             // console.log("FILES PHOTO: ", files.photo);
             if (files.photo.size > 1000000) {
                 return res.status(400).json({
-                    error: "Image should be less than 1mb in size"
+                    error: "La imagen debe pesar menos de 1 MB"
                 });
             }
-            product.photo.data = fs.readFileSync(files.photo.path);
-            product.photo.contentType = files.photo.type;
+            survey.photo.data = fs.readFileSync(files.photo.path);
+            survey.photo.contentType = files.photo.type;
         }
 
-        product.save((err, result) => {
+        survey.save((err, result) => {
             if (err) {
                 return res.status(400).json({
                     error: errorHandler(err)
@@ -156,66 +156,28 @@ exports.list = (req, res) => {
     let limit = req.query.limit ? parseInt(req.query.limit) : 6;
 
     Product.find()
-        // When returning all products we dont want to send the photo altogether.
+        // When returning all surveys we dont want to send the photo altogether.
         // It's going to be very slow
         .select("-photo")
-        // Since category in producto is an ObjectId type, populate will display the category name instead of the Id
-        .populate("category")
+        // Since user in survey is an ObjectId type, populate will display the user name instead of the Id
+        .populate("user")
         // sort order
         .sort([[sortBy, order]])
         .limit(limit)
-        .exec((err, products) => {
+        .exec((err, surveys) => {
             if (err) {
                 return res.status(400).json({
-                    error: "Products not found"
-                });
+                    error: "Surveys not found"
+                });user
             }
-            res.status(200).json(products);
+            res.status(200).json(surveys);
         });
-};
-
-/**
- * it will find the products based on the req product category
- * other products that has the same category, will be returned
- */
-
-exports.listRelated = (req, res) => {
-    // if we get limit from req query we use it otherwise we use 6 by default
-    // It's necessary to parse limit because it's sent as string
-    let limit = req.query.limit ? parseInt(req.query.limit) : 6;
-
-    // Find all the products based on the category that matches the request product category 
-    Product.find({ _id: { $ne: req.product }, category: req.product.category })
-        .limit(limit)
-        // We want to populate only the id_name
-        .populate("category", "_id name")
-        .exec((err, products) => {
-            if (err) {
-                return res.status(400).json({
-                    error: "Products not found"
-                });
-            }
-            res.status(200).json(products);
-        });
-};
-
-// Return all the categories based on products
-exports.listCategories = (req, res) => {
-    // We use distinct to get all the categories that are used in the product more distinct to product
-    Product.distinct("category", {}, (err, categories) => {
-        if (err) {
-            return res.status(400).json({
-                error: "Categories not found"
-            });
-        }
-        res.status(200).json(categories);
-    });
 };
 
 /**
  * list products by search
  * we will implement product search in react frontend
- * we will show categories in checkbox and price range in radio buttons
+ * we will show categories in checkbox 5de40cf798b5b00226831e9fand price range in radio buttons
  * as the user clicks on those checkbox and radio buttons
  * we will make api request and show the products to users based on what he wants
  */
