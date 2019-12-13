@@ -9,17 +9,17 @@ const categorySchema = new mongoose.Schema(
         long_answer: {
             type: String,
             required: true            
-        },
-        user: {
-            type: ObjectId,
-            ref: 'User',
-            required: true
-        },
-        survey: {
-            type: ObjectId,
-            ref: 'Survey',
-            required: true
-        }
+        }//,
+        // user: {
+        //     type.Schema: ObjectId,
+        //     ref: 'User',
+        //     required: true
+        // },
+        // survey: {
+        //     type: ObjectId,
+        //     ref: 'Survey',
+        //     required: true
+        // }
     },
     { timestamps: true }
 );
