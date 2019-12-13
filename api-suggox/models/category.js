@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const answerSchema = new mongoose.Schema(
+const categorySchema = new mongoose.Schema(
     {
         simple_answer: {
             type: Boolean,
@@ -24,4 +24,4 @@ const answerSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-module.exports = mongoose.model("Answer", answerSchema);
+module.exports = mongoose.model("Category", categorySchema);
