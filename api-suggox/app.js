@@ -33,7 +33,7 @@ app.use(expressValidator());
 // Cors will be able to hadle the request coming from different origins
 app.use(cors());
 
-app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
+// app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 // routes middleware
 app.use('/api', authRoutes);
