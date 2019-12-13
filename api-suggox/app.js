@@ -18,7 +18,7 @@ const surveyRoutes = require("./routes/survey");
 // app 
 const app = express();
 
-// db
+// db tkm
 mongoose
     .connect(process.env.DATABASE, {
         useNewUrlParser: true,
