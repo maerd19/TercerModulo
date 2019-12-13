@@ -155,7 +155,7 @@ exports.list = (req, res) => {
     // It's necessary to parse limit because it's sent as string
     let limit = req.query.limit ? parseInt(req.query.limit) : 6;
 
-    Product.find()
+    Survey.find()
         // When returning all surveys we dont want to send the photo altogether.
         // It's going to be very slow
         .select("-photo")
@@ -195,30 +195,21 @@ exports.listBySearch = (req, res) => {
 
     for (let key in req.body.filters) {
         if (req.body.filters[key].length > 0) {
-            if (key === "price") {
-                // gte -  greater than price [0-10]
-                // lte - less than
-                findArgs[key] = {
-                    $gte: req.body.filters[key][0],
-                    $lte: req.body.filters[key][1]
-                };
-            } else {
-                findArgs[key] = req.body.filters[key];
-            }
+            findArgs[key] = req.body.filters[key];
         }
     }
 
-    Product.find(findArgs)
+    Survey.find(findArgs)
         // select all but the photo
         .select("-photo")
-        .populate("category")
+        .populate("user")
         .sort([[sortBy, order]])
         .skip(skip)
         .limit(limit)
         .exec((err, data) => {
             if (err) {
                 return res.status(400).json({
-                    error: "Products not found"
+                    error: "No se encontro la encuesta"
                 });
             }
             res.status(200).json({
