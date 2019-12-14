@@ -8,6 +8,7 @@ import PrivateRoute from "./auth/PrivateRoute";
 import Dashboard from "./user/UserDashboard";
 import AdminRoute from "./auth/AdminRoute";
 import AdminDashboard from "./user/AdminDashboard";
+import Survey from "./survey/CreateSurvey";
 
 const Routes = () => {
     return (
@@ -29,6 +30,11 @@ const Routes = () => {
                     path='/admin/dashboard' 
                     exact 
                     component={AdminDashboard} 
+                />
+                <Route 
+                    path='/create_survey' 
+                    exact 
+                    component={Survey} 
                 />
             </Switch>
         </BrowserRouter>
