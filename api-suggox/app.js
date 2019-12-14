@@ -12,7 +12,7 @@ require('dotenv').config();
 // import routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
-const categoryRoutes = require('./routes/category');
+const answerRoutes = require('./routes/answer');
 const surveyRoutes = require("./routes/survey");
 
 // app 
@@ -39,7 +39,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // routes middleware
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
-app.use('/api', categoryRoutes);
+app.use('/api', answerRoutes);
 app.use("/api", surveyRoutes);
 
 app.use('*', (req, res) => {

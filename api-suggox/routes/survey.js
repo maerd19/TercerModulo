@@ -14,10 +14,10 @@ const {
 const { requireSignin, isAuth, isAdmin } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 
-router.get("/survey/:surveyId", read);
 router.post("/survey/create/:userId", requireSignin, isAuth, isAdmin, create);
-router.delete("/survey/:surveyId/:userId", requireSignin, isAuth, isAdmin, remove);
+router.get("/survey/:surveyId", read);
 router.put("/survey/:surveyId/:userId", requireSignin, isAuth, isAdmin, update);
+router.delete("/survey/:surveyId/:userId", requireSignin, isAuth, isAdmin, remove);
 
 // List of all the surveys
 router.get("/surveys", list);

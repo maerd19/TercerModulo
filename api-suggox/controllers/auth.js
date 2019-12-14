@@ -5,10 +5,11 @@ const { errorHandler } = require('../helpers/dbErrorHandler');
 
 exports.signup = (req, res) => {
     // We are going to create a new user based on what we get from the request body 
-    // console.log('req.body', req.body);    
+    console.log('req.body', req.body);    
     const user = new User(req.body);
     // Once we create a new user we need to save that in the DB
     user.save((err, user) => {
+        console.log(user,err)
         if(err) {
             return res.status(400).json({
                 error: errorHandler(err)
