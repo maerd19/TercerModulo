@@ -17,13 +17,6 @@ exports.surveyById = (req, res, next, id) => {
     });
 };
 
-// Get a single survey
-exports.read = (req, res) => {
-    // photo will not be sent because it may have a big size that can cause performance issues
-    req.survey.photo = undefined;
-    return res.status(200).json(req.survey);
-};
-
 // Create a new survey
 exports.create = (req, res) => {
     // formidable will help to handle from requests
@@ -75,19 +68,11 @@ exports.create = (req, res) => {
     });
 };
 
-// Delete a survey
-exports.remove = (req, res) => {
-    let survey = req.survey;
-    survey.remove((err) => {
-        if (err) {
-            return res.status(400).json({
-                error: errorHandler(err)
-            });
-        }
-        res.status(204).json({
-            message: `Encuesta borrada exitosamente`
-        });
-    });
+// Get a single survey
+exports.read = (req, res) => {
+    // photo will not be sent because it may have a big size that can cause performance issues
+    req.survey.photo = undefined;
+    return res.status(200).json(req.survey);
 };
 
 // Update a survey
@@ -134,6 +119,21 @@ exports.update = (req, res) => {
                 });
             }
             res.status(202).json(result);
+        });
+    });
+};
+
+// Delete a survey
+exports.remove = (req, res) => {
+    let survey = req.survey;
+    survey.remove((err) => {
+        if (err) {
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        res.status(204).json({
+            message: `Encuesta borrada exitosamente`
         });
     });
 };
