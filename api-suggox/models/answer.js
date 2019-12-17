@@ -1,6 +1,7 @@
  const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
+// Este es un comentario de prueba para probar git
 const answerSchema = new mongoose.Schema(
     {
         simple_answer: {
