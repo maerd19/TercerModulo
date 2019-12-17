@@ -13,7 +13,7 @@ const Signup = () => {
         success: false
     });
 
-    // Values destructured from the state
+    // Destructurando valores
     const { name, email, password, success, error } = values;
 
     // Higher Order Function: A function that returns another function
