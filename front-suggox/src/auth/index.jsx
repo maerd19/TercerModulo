@@ -9,7 +9,6 @@ export const signup = user => {
             Accept: "application/json",
             "Content-Type": "application/json"
         },
-        // stringify is used to convert the object in a JSON string 
         body: JSON.stringify(user)
     })
     // When the fetch is make we will either get a successful response or an error to handle

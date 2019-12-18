@@ -6,7 +6,8 @@ function CreateSurvey() {
     const [encuesta, guardarEncuesta] = useState({
         nombre : '',        
         comentario : ''
-    })
+    });
+
     const [ error, guardarError ] = useState(false);
 
     // Destructurando valores
@@ -22,14 +23,11 @@ function CreateSurvey() {
 
     const crearEncuesta = e => {
         e.preventDefault();
-
         // Validacion de formulario vacio
         if (!nombre || !comentario) {
             guardarError(true);
             return;
-        }
-        
-
+        }        
         // Se paso la validacion correctamente
         guardarError(false);
         // Se usa el API para dar de alta el formulario
