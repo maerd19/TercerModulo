@@ -45,16 +45,16 @@ exports.create = (req, res) => {
         // 1mb = 1000000
         
         // Validation for image upload
-        if (files.photo) {
-            // console.log("FILES PHOTO: ", files.photo);
-            if (files.photo.size > 1000000) {
-                return res.status(400).json({
-                    error: "La imagen debe pesar menos de 1 MB"
-                });
-            }
-            survey.photo.data = fs.readFileSync(files.photo.path);
-            survey.photo.contentType = files.photo.type;
-        }
+        // if (files.photo) {
+        //     // console.log("FILES PHOTO: ", files.photo);
+        //     if (files.photo.size > 1000000) {
+        //         return res.status(400).json({
+        //             error: "La imagen debe pesar menos de 1 MB"
+        //         });
+        //     }
+        //     survey.photo.data = fs.readFileSync(files.photo.path);
+        //     survey.photo.contentType = files.photo.type;
+        // }
         
         // new survey is created in DB
         survey.save((err, result) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import Error from '../core/Error';
-import { createForm } from '../form';
+import { createForm } from './index';
 
 function CreateSurvey() {
     const [encuesta, guardarEncuesta] = useState({
@@ -28,20 +28,20 @@ function CreateSurvey() {
             guardarError(true);
             return;
         }
+        
 
         // Se paso la validacion correctamente
-        // guardarError(false);
-        // // Se usa el API para dar de alta el formulario
-        // createForm({ nombre, comentario })
-        //     .then(data => {
-        //         if (data)
-        //     })
-        // alert(`ya enviaste la info morrito`);
+        guardarError(false);
+        // Se usa el API para dar de alta el formulario
+        createForm({ nombre, comentario })
+            .then(data => {
+             console.log('mamdas',data)
+            }).catch(err=>console.log('otro erro',err))
     }    
 
 
-    useEffect(() => {        
-    }, [])
+    // useEffect(() => {        
+    // }, [])
 
     return (
         <Fragment>
@@ -65,14 +65,13 @@ function CreateSurvey() {
                 <div className='input-field col-12'>
                     <textarea 
                         style={{color: "red"}}
-                        style={divStyle}
                         name='comentario'
                         id='comentario'
                         onChange={handleChange}
                     />
                     <label htmlFor='comentario'>Comentario: </label>
                 </div>
-                <button type="submit" className="btn btn-primary float-right">Buscar</button>
+                <button type="submit" className="btn btn-primary float-right">Crear</button>
             </form>
         </Fragment>                
     )

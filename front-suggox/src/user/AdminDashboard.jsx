@@ -13,7 +13,7 @@ const AdminDashboard = () => {
                 <ul className="list-group">
                     <li className="list-group-item">
                         <Link className="nav-link" to="/create_survey">
-                            Create Survey
+                            Crear Encuesta
                         </Link>
                     </li>
                 </ul>

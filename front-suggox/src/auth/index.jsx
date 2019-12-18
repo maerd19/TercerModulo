@@ -6,10 +6,7 @@ export const signup = user => {
     return fetch(`${API}/signup`, {
         method: "POST",
         headers: {
-            // When we make a post request the API will respond with the JSON data.
-            // We need to maje sure that we accept the application/json
             Accept: "application/json",
-            // Content type indicates what sort of content type we're sending with the push to request it
             "Content-Type": "application/json"
         },
         // stringify is used to convert the object in a JSON string 
