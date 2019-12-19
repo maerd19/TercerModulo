@@ -17,7 +17,7 @@ exports.signup = (req, res) => {
         }
         user.salt = undefined;
         user.hashed_password = undefined;
-        res.status(201).json({
+        return res.status(201).json({
             user
         });
     });
