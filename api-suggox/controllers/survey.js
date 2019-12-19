@@ -22,19 +22,21 @@ exports.surveyById = (req, res, next, id) => {
 exports.create = (req, res) => {
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
-    form.parse(req, (err, fields, files) => {        
-        // if (err) {
-        //     return res.status(400).json({
-        //         error: "No se pudo cargar la imagen"
-        //     });
-        // }
+    form.parse(req, (err, fields, files) => {
+
+        if (err) {
+            return res.status(400).json({
+                error: "Image could not be uploaded"
+            });
+        }
 
         const { name, description } = fields;
-        console.log(req.body);
+        
+        console.log('aqui esta el body', fields);
         console.log(`que pedo foggy, ${name}, ${description}`);
 
         if ( !name || !description ) {
-            return res.status(400).json({
+            return res.status(404).json({
                 error: "Todos los campos son requeridos"
             });
         }

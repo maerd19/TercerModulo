@@ -26,17 +26,20 @@ function CreateSurvey() {
 
     const crearEncuesta = e => {
         e.preventDefault();
-        console.log(`react: ${name}, ${description}`)
+        guardarEncuesta({ ...encuesta});
+
         // Validacion de formulario vacio
-        if (!name || !description) {
+        if (!encuesta.name || !encuesta.description) {
             guardarError(true);
             return;
         }        
         guardarError(false);
-        console.log(`name: ${name}, description: ${description}`)
+        console.log(`react = name: ${name}, description: ${description}`);
+        console.log(`completo react = name: ${encuesta.name}, description: ${encuesta.description}`);
 
-        createForm(user._id, token, { name, description }).then(data => {
+        createForm(user._id, token, {name,description}).then(data => {
             if (data.error) {
+                guardarEncuesta({ ...encuesta});
                 guardarError(true);
             } else {
                 guardarError(false);
@@ -52,7 +55,7 @@ function CreateSurvey() {
     return (
         <Fragment>
             <h2>Coloca tu Encuesta</h2>
-            {error ? <Error mensaje='Todos los campos son necesarios' /> : null}
+            {/* {error ? <Error mensaje='Todos los campos son necesarios' /> : null} */}
             {exito ? <Exito mensaje='Encuesta creada exitosamente' /> : null}
 
             <form 
