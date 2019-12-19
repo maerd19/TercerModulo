@@ -10,6 +10,7 @@ import AdminRoute from "./auth/AdminRoute";
 import AdminDashboard from "./user/AdminDashboard";
 import AddSurvey from "./admin/CreateSurvey";
 import SurveyList from "./user/SurveyList";
+import SurveyAnswer from "./user/SurveyAnswer";
 
 const Routes = () => {
     return (
@@ -39,9 +40,14 @@ const Routes = () => {
                     component={AddSurvey} 
                 />
                 <Route 
-                    path='/answer_survey' 
+                    path='/survey_list' 
                     exact 
                     component={SurveyList} 
+                />
+                <Route 
+                    path='/answer_survey/:id' 
+                    exact 
+                    component={SurveyAnswer} 
                 />
             </Switch>
         </BrowserRouter>

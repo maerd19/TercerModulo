@@ -13,7 +13,7 @@ const Dashboard = () => {
                 <h4 className="card-header">User Links</h4>
                 <ul className="list-group">
                     <li className="list-group-item">
-                        <Link className="nav-link" to="/answer_survey">
+                        <Link className="nav-link" to="/survey_list">
                             Ver Encuestas
                         </Link>
                     </li>

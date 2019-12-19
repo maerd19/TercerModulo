@@ -164,7 +164,7 @@ exports.list = (req, res) => {
         .exec((err, surveys) => {
             if (err) {
                 return res.status(400).json({
-                    error: "Surveys not found"
+                    error: "No se encontraron encuestas"
                 });user
             }
             res.status(200).json(surveys);
