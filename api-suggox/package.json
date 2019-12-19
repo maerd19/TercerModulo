@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon app.js",
     "deploy": "cd .. && git subtree push --prefix api-suggox heroku master",
-    "builddeploy": "cd ../front-suggox/ && yarn react-scripts build && cp -rf build/* ../api-suggox/public && cd .. && git subtree push --prefix api-suggox heroku master"
+    "builddeploy": "cd ../front-suggox/ && yarn react-scripts build && cp -rf build/ ../api-suggox/public && cd .. && git subtree push --prefix api-suggox heroku master"
   },
   "keywords": [],
   "author": "",
