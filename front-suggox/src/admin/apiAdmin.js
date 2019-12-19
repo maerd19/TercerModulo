@@ -1,17 +1,13 @@
 import { API } from "../config";
 
-export const createForm = (userId, token, newForm) => {
-
-    console.log(`userId: ${userId}, token: ${token}, newForm:`, newForm)
-    return fetch(`${API}/survey/create/${userId}`, {        
+export const createSurvey = (userId, token, product) => {
+    return fetch(`${API}/survey/create/${userId}`, {
         method: "POST",
         headers: {
             Accept: "application/json",
-            // "Content-Type": "application/json",
             Authorization: `Bearer ${token}`
         },
-        // body: JSON.stringify(newForm)
-        body: newForm
+        body: product
     })
         .then(response => {
             return response.json();
@@ -19,4 +15,4 @@ export const createForm = (userId, token, newForm) => {
         .catch(err => {
             console.log(err);
         });
-}
+};

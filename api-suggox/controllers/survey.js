@@ -26,17 +26,15 @@ exports.create = (req, res) => {
 
         if (err) {
             return res.status(400).json({
-                error: "Image could not be uploaded"
+                error: "No se pudo cargar la imagen"
             });
         }
 
-        const { name, description } = fields;
+        const { name, description/*, price, category, quantity, shipping*/ } = fields;
         
-        console.log('aqui esta el body', fields);
-        console.log(`que pedo foggy, ${name}, ${description}`);
 
-        if ( !name || !description ) {
-            return res.status(404).json({
+        if ( !name || !description /*|| !price || !category || !quantity || !shipping */) {
+            return res.status(400).json({
                 error: "Todos los campos son requeridos"
             });
         }
@@ -45,25 +43,18 @@ exports.create = (req, res) => {
         fields.user = req.profile._id;
 
         let survey = new Survey(fields);
-
-        // 1kb = 1000
-        // 1mb = 1000000
         
-        // Validation for image upload
-        // if (files.photo) {
-        //     // console.log("FILES PHOTO: ", files.photo);
-        //     if (files.photo.size > 1000000) {
-        //         return res.status(400).json({
-        //             error: "La imagen debe pesar menos de 1 MB"
-        //         });
-        //     }
-        //     survey.photo.data = fs.readFileSync(files.photo.path);
-        //     survey.photo.contentType = files.photo.type;
-        // }
+        if (files.photo) {
+            if (files.photo.size > 1000000) {
+                return res.status(400).json({
+                    error: "La imagen debe pesar menos de 1 MB"
+                });
+            }
+            survey.photo.data = fs.readFileSync(files.photo.path);
+            survey.photo.contentType = files.photo.type;
+        }
         
-        survey.save((err, result) => {
-            console.log();
-            
+        survey.save((err, result) => {            
             if (err) {
                 return res.status(400).json({
                     error: errorHandler(err)

@@ -8,8 +8,8 @@ import PrivateRoute from "./auth/PrivateRoute";
 import Dashboard from "./user/UserDashboard";
 import AdminRoute from "./auth/AdminRoute";
 import AdminDashboard from "./user/AdminDashboard";
-import Survey from "./survey/CreateSurvey";
-import SurveyList from "./survey/SurveyList";
+import AddSurvey from "./admin/CreateSurvey";
+// import SurveyList from "./survey/SurveyList";
 
 const Routes = () => {
     return (
@@ -18,6 +18,7 @@ const Routes = () => {
             {/* Inside Switch we will have all the routes */}
             <Switch>
                 <Route path="/" exact component={Home} />
+                {/* <Route path="/surveylist" exact component={SurveyList} /> */}
                 <Route path="/signin" exact component={Signin} />
                 <Route path="/signup" exact component={Signup} />
                 {/* PrivateRoute will protect route only for the logged in users */}
@@ -32,16 +33,16 @@ const Routes = () => {
                     exact 
                     component={AdminDashboard} 
                 />
-                <Route 
+                <AdminRoute 
                     path='/create_survey' 
                     exact 
-                    component={Survey} 
+                    component={AddSurvey} 
                 />
-                <Route 
+                {/* <Route 
                     path='/answer_survey' 
                     exact 
                     component={SurveyList} 
-                />
+                /> */}
             </Switch>
         </BrowserRouter>
     );
