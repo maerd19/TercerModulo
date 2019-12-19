@@ -25,16 +25,16 @@ function CreateSurvey() {
     }
 
     const crearEncuesta = e => {
-        console.log('por favor functiona :(')
         e.preventDefault();
+        console.log(`react: ${name}, ${description}`)
         // Validacion de formulario vacio
         if (!name || !description) {
             guardarError(true);
             return;
         }        
-        // Se paso la validacion correctamente
         guardarError(false);
-        // Se usa el API para dar de alta el formulario
+        console.log(`name: ${name}, description: ${description}`)
+
         createForm(user._id, token, { name, description }).then(data => {
             if (data.error) {
                 guardarError(true);

@@ -7,9 +7,7 @@ exports.userById = (req, res, next, id) => {
                 error: 'No se encontro al usuario'
             });
         }
-        req.profile = user;
-        // console.log('aqui se vera el perfil del usuario', req.profile);
-        
+        req.profile = user;        
         next();
     })
 }

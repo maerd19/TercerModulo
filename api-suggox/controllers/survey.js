@@ -30,6 +30,8 @@ exports.create = (req, res) => {
         // }
 
         const { name, description } = fields;
+        console.log(req.body);
+        console.log(`que pedo foggy, ${name}, ${description}`);
 
         if ( !name || !description ) {
             return res.status(400).json({
@@ -58,6 +60,8 @@ exports.create = (req, res) => {
         // }
         
         survey.save((err, result) => {
+            console.log();
+            
             if (err) {
                 return res.status(400).json({
                     error: errorHandler(err)
