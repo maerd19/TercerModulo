@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 
 import { createSurvey } from "./apiAdmin";
 
-const AddProduct = () => {
+const AddSurvey = () => {
     const [values, setValues] = useState({
         name: "",
         description: "",
         photo: "",
         loading: false,
         error: "",
-        createdProduct: "",
+        createdSurvey: "",
         formData: ""
     });
 
@@ -23,7 +23,7 @@ const AddProduct = () => {
         description,
         loading,
         error,
-        createdProduct,
+        createdSurvey,
         formData
     } = values;
 
@@ -59,7 +59,7 @@ const AddProduct = () => {
                     description: "",
                     photo: "",
                     loading: false,
-                    createdProduct: data.name
+                    createdSurvey: data.name
                 });
             }
         });
@@ -67,7 +67,7 @@ const AddProduct = () => {
 
     const newPostForm = () => (
         <form className="mb-3" onSubmit={clickSubmit}>
-            <h4>Post Photo</h4>
+            <h4>Fotografia</h4>
             <div className="form-group">
                 <label className="btn btn-secondary">
                     <input
@@ -114,9 +114,9 @@ const AddProduct = () => {
     const showSuccess = () => (
         <div
             className="alert alert-info"
-            style={{ display: createdProduct ? "" : "none" }}
+            style={{ display: createdSurvey ? "" : "none" }}
         >
-            <h2>{`${createdProduct}`} se creo exitosamente!</h2>
+            <h2>{`${createdSurvey}`} se creo exitosamente!</h2>
         </div>
     );
 
@@ -130,7 +130,7 @@ const AddProduct = () => {
     return (
         <Layout
             title="Agregar una encuesta"
-            description={`${user.name} completa los campos`}
+            description={`${user.name}, completa los campos`}
         >
             <div className="row">
                 <div className="col-md-8 offset-md-2">
@@ -144,4 +144,4 @@ const AddProduct = () => {
     );
 };
 
-export default AddProduct;
+export default AddSurvey;

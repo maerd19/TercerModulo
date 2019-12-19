@@ -9,7 +9,7 @@ import Dashboard from "./user/UserDashboard";
 import AdminRoute from "./auth/AdminRoute";
 import AdminDashboard from "./user/AdminDashboard";
 import AddSurvey from "./admin/CreateSurvey";
-// import SurveyList from "./survey/SurveyList";
+import SurveyList from "./user/SurveyList";
 
 const Routes = () => {
     return (
@@ -38,11 +38,11 @@ const Routes = () => {
                     exact 
                     component={AddSurvey} 
                 />
-                {/* <Route 
+                <Route 
                     path='/answer_survey' 
                     exact 
                     component={SurveyList} 
-                /> */}
+                />
             </Switch>
         </BrowserRouter>
     );
