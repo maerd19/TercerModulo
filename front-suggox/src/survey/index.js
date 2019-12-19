@@ -1,18 +1,20 @@
 import { API } from "../config";
-// import axios from 'axios';
 
 export const createForm = (userId, token, newForm) => {
-    return fetch(`${API}/survey/create/${userId}`, {
+
+    console.log(`test para ver si imprime API: ${API}/survey/create/${userId}`);
+    console.log(`Esto es un token ${token}`);
+    
+
+    return fetch(`${API}/survey/create/${userId}`, {        
         method: "POST",
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            // Since this endpoint needs the authorization token it's necessary to send it
             Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(category)
+        body: JSON.stringify(newForm)
     })
-    // We get the response and process it
         .then(response => {
             return response.json();
         })

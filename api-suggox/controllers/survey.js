@@ -13,31 +13,32 @@ exports.surveyById = (req, res, next, id) => {
             });
         }
         req.survey = survey;
+        console.log(`se agrego survey a req: ${req}`)
         next();
     });
 };
 
 // Create a new survey
 exports.create = (req, res) => {
-    // formidable will help to handle from requests
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
-    form.parse(req, (err, fields, files) => {
-        
-        if (err) {
-            return res.status(400).json({
-                error: "No se pudo cargar la imagen"
-            });
-        }
+    form.parse(req, (err, fields, files) => {        
+        // if (err) {
+        //     return res.status(400).json({
+        //         error: "No se pudo cargar la imagen"
+        //     });
+        // }
 
-        const { name, description, user } = fields;
+        const { name, description } = fields;
 
-        // all fields should be filled
-        if ( !name || !description || !user ) {
+        if ( !name || !description ) {
             return res.status(400).json({
                 error: "Todos los campos son requeridos"
             });
         }
+
+        // Se agrega el usuario a fields        
+        fields.user = req.profile._id;
 
         let survey = new Survey(fields);
 
@@ -56,7 +57,6 @@ exports.create = (req, res) => {
         //     survey.photo.contentType = files.photo.type;
         // }
         
-        // new survey is created in DB
         survey.save((err, result) => {
             if (err) {
                 return res.status(400).json({
