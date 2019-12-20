@@ -16,3 +16,13 @@ export const createAnswer = (userId, token, product) => {
             console.log(err);
         });
 };
+
+export const getSurveyById = surveyId => {
+    return fetch(`${API}/survey/${surveyId}`, {
+        method: "GET"
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+}

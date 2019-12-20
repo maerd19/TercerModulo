@@ -1,22 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
+import { getSurveyById } from "./apiUser";
 
 import { createAnswer } from './apiUser';
 
 const SurveyAnswer = (props) => {
+    // Props
     const {id : survey_id} = props.match.params
 
-    console.log(survey_id);
-
+    // State
+    const [survey, setSurvey] = useState('');
     const [values, setValues] = useState({
         simple_answer: "",
-        long_answer: "",
+        long_answer: "",        
         loading: false,
         error: "",
-        createdAnswer: '',
+        createdAnswer: "",
         formData: ""
     });
+
+    // console.log(survey_id);
 
     const { user, token } = isAuthenticated();
 
@@ -29,9 +33,21 @@ const SurveyAnswer = (props) => {
         });
     };
 
+    const surveyValues = () => {
+        getSurveyById(survey_id).then(data => {
+            if (data.error) {
+                setValues({ ...values, error: data.error });
+            } else {
+                console.log('esto es una prueba', data);                
+                setSurvey(data);
+            }
+        });        
+    };
+
 
     useEffect(() => {
         init();
+        surveyValues();
     }, [])
 
     const handleChange = event => {
@@ -62,27 +78,30 @@ const SurveyAnswer = (props) => {
     };
 
     const answerForm = () => (
-        <form className="mb-3" onSubmit={clickSubmit}>
-            <div className="form-group">
-                <label className="text-muted">Respuesta corta</label>
-                <textarea
-                    onChange={handleChange}
-                    className="form-control"
-                    value={simple_answer}
-                />
-            </div>
+        <Fragment>
+            <h1>{survey.description}</h1>
+            <form className="mb-3" onSubmit={clickSubmit}>
+                <div className="form-group">
+                    <label className="text-muted">Respuesta corta</label>
+                    <textarea
+                        onChange={handleChange}
+                        className="form-control"
+                        value={simple_answer}
+                    />
+                </div>
 
-            <div className="form-group">
-                <label className="text-muted">Respuesta Larga</label>
-                <textarea
-                    onChange={handleChange}
-                    className="form-control"
-                    value={long_answer}
-                />
-            </div>
+                <div className="form-group">
+                    <label className="text-muted">Respuesta Larga</label>
+                    <textarea
+                        onChange={handleChange}
+                        className="form-control"
+                        value={long_answer}
+                    />
+                </div>
 
-            <button className="btn btn-outline-primary">Crear Encuesta</button>
-        </form>
+                <button className="btn btn-outline-primary">Crear Encuesta</button>
+            </form>
+        </Fragment>        
     );
 
     const showError = () => (
@@ -113,11 +132,11 @@ const SurveyAnswer = (props) => {
     return (
         <Layout
             title="Agregar una respuesta"
-            description={`${user.name}, proporciona tu respuesta`}
+            description={`${user.name}, proporciona tu respuesta para "${survey.name}"`}
         >
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    <h1>{survey_id}</h1>
+                    {/* <h1>{survey_id}</h1> */}
                     {showLoading()}
                     {showSuccess()}
                     {showError()}
